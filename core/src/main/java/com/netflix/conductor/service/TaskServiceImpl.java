@@ -179,7 +179,13 @@ public class TaskServiceImpl implements TaskService {
             failTask(task, errorMsg);
             ackResult.set(false);
         }
-        return ackResult.get();
+        boolean result = ackResult.get();
+        if (result) {
+            LOGGER.debug("ackTaskReceived par ack");
+        } else {
+            LOGGER.debug("ackTaskReceived par not ack");
+        }
+        return result;
     }
 
     /**

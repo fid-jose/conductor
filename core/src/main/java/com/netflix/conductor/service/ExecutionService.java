@@ -229,7 +229,13 @@ public class ExecutionService {
 	}
 
 	public boolean ackTaskReceived(Task task) {
-		return queueDAO.ack(QueueUtils.getQueueName(task), task.getTaskId());
+		boolean result = queueDAO.ack(QueueUtils.getQueueName(task), task.getTaskId());
+		if (result) {
+            logger.debug("ackTaskReceived ack");
+		} else {
+            logger.debug("ackTaskReceived not ack");
+		}
+		return result;
 	}
 
 	public Map<String, Integer> getTaskQueueSizes(List<String> taskDefNames) {
