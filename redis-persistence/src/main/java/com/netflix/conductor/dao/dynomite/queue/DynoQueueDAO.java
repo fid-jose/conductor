@@ -215,6 +215,9 @@ public class DynoQueueDAO implements QueueDAO {
 
     @Override
     public boolean ack(String queueName, String messageId) {
+        for (StackTraceElement element: Thread.currentThread().getStackTrace()) {
+            logger.info("ackTaskReceived debug " + element.toString());
+        };
         return queues.get(queueName).ack(messageId);
 
     }

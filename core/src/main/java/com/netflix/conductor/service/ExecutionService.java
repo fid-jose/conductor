@@ -229,6 +229,7 @@ public class ExecutionService {
 	}
 
 	public boolean ackTaskReceived(Task task) {
+        logger.debug("ackTaskReceived queueDAO is "+queueDAO.getClass().getName());
 		boolean result = queueDAO.ack(QueueUtils.getQueueName(task), task.getTaskId());
 		if (result) {
             logger.debug("ackTaskReceived ack");
