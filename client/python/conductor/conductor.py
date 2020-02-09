@@ -185,17 +185,10 @@ class TaskClient(BaseClient):
         self.post(url, None, taskObj, headers)
 
     def pollForTask(self, taskType, workerid, domain=None):
-        url = self.makeUrl('poll/{}', taskType)
-        params = {}
-        params['workerid'] = workerid
-        if domain is not None:
-            params['domain'] = domain
-
-        try:
-            return self.get(url, params)
-        except Exception as err:
-            print('Error while polling ' + str(err))
+        task = self.pollForBatch(taskType, 1, 30, workerid, domain=domain)
+        if not task:
             return None
+        return task[0]
 
     def pollForBatch(self, taskType, count, timeout, workerid, domain=None):
         url = self.makeUrl('poll/batch/{}', taskType)
